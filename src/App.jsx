@@ -9,7 +9,27 @@ function App() {
   function addNote(newNote) {
     setAllNotes([...allNotes, newNote]);
   }
+  function removeNote (id){
+    setAllNotes(allNotes.filter((element)=>{
+      return   element.id != id;
+    }))
+  }
 
+  function editNote(id, updatedHeading, updatedNote) {
+  setAllNotes(
+    allNotes.map((note) => {
+      if (note.id === id) {
+        return {
+          ...note,
+          heading: updatedHeading,
+          note: updatedNote,
+        };
+      }
+
+      return note;
+    })
+  );
+}
   return (
     <>
       <h1 className='font-bold text-white text-3xl text-center mt-[20px]'>
@@ -22,6 +42,9 @@ function App() {
           key={note.id}
           heading={note.heading}
           note={note.note}
+          id ={note.id}
+          onRemove = {removeNote}
+          onEdit={editNote}
         />
       ))}
 
